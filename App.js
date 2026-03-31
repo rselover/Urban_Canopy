@@ -60,7 +60,7 @@ function App() {
           onClick: handleDrawerToggle,
           sx: { mr: 2 }
         }, e('span', { className: 'material-icons' }, open ? 'chevron_left' : 'menu')),
-        e(Typography, { variant: 'h6', noWrap: true, component: 'div' }, 'Phish Song Count Dashboard')
+        e(Typography, { variant: 'h6', noWrap: true, component: 'div' }, 'Boston Uban Canopy')
       )
     ),
     e(Drawer, {
@@ -96,9 +96,9 @@ function App() {
     },
       e(Toolbar),
       e(Container, { maxWidth: 'lg' },
-        e(Typography, { variant: 'h4', gutterBottom: true }, 'PHISH SONG COUNT BY CITY'),
+        e(Typography, { variant: 'h4', gutterBottom: true }, 'Boston Urban Canopy Distribution'),
         e(Typography, { variant: 'subtitle1', gutterBottom: true },
-          'Find Yourself a City to Live In – Songs from every Phish show aggregated by City'
+          'Boston Urban Canopy Distribution – Where are trees concentrated?'
         ),
         e(CollapsibleCard, { title: "Map", defaultOpen: true },
           e('div', {

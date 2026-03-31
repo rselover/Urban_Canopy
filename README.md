@@ -1,5 +1,5 @@
-# Phish Song Count by City
+# Boston Tree Distribution
 
-A React app (flat structure, JS only) for visualizing Phish songs by city.
+A React app (flat structure, JS only) for visualizing Boston Tree Distibution.
 
 https://rselover.github.io/Urban_Canopy/
