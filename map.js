@@ -6,7 +6,7 @@ function initMap() {
       container: 'map',
       style: 'mapbox://styles/mapbox/dark-v11',
       center: [-71, 42.5],
-      zoom: 8,
+      zoom: 10,
       pitch: 20,
       bearing: 0
     });
@@ -19,7 +19,7 @@ function initMap() {
       const hexLayer = new deck.HexagonLayer({
         id: 'tree-hex-layer',
         data,
-        radius: 200,
+        radius: 500,
         elevationScale: 25,
         extruded: true,
         pickable: true,
