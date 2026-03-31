@@ -1,7 +1,7 @@
 mapboxgl.accessToken = 'pk.eyJ1IjoicnNlbG92ZXIiLCJhIjoiY21hbGJxMGxjMDZ6MDJtb3JqMWx5ZHh0YSJ9.50NQFxaZLsWruJ8dFIqfXw';
 
 function initMap() {
-  loadPhishData().then(data => {
+  loadTreeData().then(data => {
     const map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://styles/mapbox/dark-v11',
@@ -17,7 +17,7 @@ function initMap() {
 
     map.on('load', () => {
       const hexLayer = new deck.HexagonLayer({
-        id: 'phish-hex-layer',
+        id: 'tree-hex-layer',
         data,
         radius: 20000,
         elevationScale: 250,
