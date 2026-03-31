@@ -6,7 +6,7 @@ function initMap() {
       container: 'map',
       style: 'mapbox://styles/mapbox/dark-v11',
       center: [-71, 42.5],
-      zoom: 11,
+      zoom: 10,
       pitch: 20,
       bearing: 0
     });
