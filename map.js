@@ -20,7 +20,7 @@ function initMap() {
         id: 'tree-hex-layer',
         data,
         radius: 500,
-        elevationScale: 25,
+        elevationScale: 20,
         extruded: true,
         pickable: true,
         getPosition: d => d.position,
