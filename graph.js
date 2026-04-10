@@ -1,54 +1,31 @@
-// Make sure d3 and Plot are loaded in your HTML for this to work
+function renderTreeDBHPlot() {
+  loadTreeData().then(data => {
+    // Log the first record so you can confirm field names
+    console.log("Sample tree record:", data[0]);
 
-const graphCsvUrl = 'https://gist.githubusercontent.com/rselover/4557e5bd2a742985c4a7f55acd34fa9a/raw/202f20905e299ffa3963b10f3e8ece3c2fb7eae4/Phish_Groomed_2019-0213.csv';
-
-function loadGraphData() {
-  return d3.csv(graphCsvUrl, row => ({
-    ...row
-  }));
-}
-
-function renderShowsByYearPlot() {
-  loadGraphData().then(data => {
-    // Debug: log loaded data
-    // console.log("Loaded data:", data);
-
-    const years = {};
-    data.forEach(d => {
-      const dateStr = d.Date;
-      if (dateStr) {
-        const year = +dateStr.slice(0, 4);
-        if (!isNaN(year)) {
-          years[year] = (years[year] || 0) + 1;
-        }
-      }
-    });
-
-    const yearCounts = Object.entries(years)
-      .map(([year, count]) => ({ year: +year, count }))
-      .sort((a, b) => a.year - b.year);
+    // Filter to records with a valid DBH value
+    const validData = data
+      .map(d => ({ dbh: +d.DBH }))         // ← adjust "DBH" to match your field name
+      .filter(d => !isNaN(d.dbh) && d.dbh > 0 && d.dbh < 200);
 
     const plotDiv = document.getElementById('plot');
     plotDiv.innerHTML = '';
 
-    // Make the plot fill the card width with similar buffer as the map
-    // Get the parent card content width (the CollapsibleCard's CardContent)
     let plotWidth = 700;
     const parent = plotDiv.parentElement;
     if (parent) {
-      // Subtract padding/margin for a buffer (32px is CardContent default padding)
       plotWidth = Math.max(300, parent.clientWidth - 32);
     }
 
-    if (yearCounts.length === 0) {
-      plotDiv.textContent = "No data to display. Check your CSV field names.";
+    if (validData.length === 0) {
+      plotDiv.textContent = "No DBH data found. Check the field name in your GeoJSON.";
       return;
     }
 
     const plot = Plot.plot({
-      marginLeft: 40,
+      marginLeft: 50,
       marginRight: 20,
-      marginBottom: 40,
+      marginBottom: 50,
       width: plotWidth,
       height: 300,
       style: {
@@ -57,19 +34,19 @@ function renderShowsByYearPlot() {
         fontFamily: "sans-serif"
       },
       x: {
-        label: "Year",
+        label: "Diameter at Breast Height (inches) →",
         labelAnchor: "center",
-        tickFormat: d => String(d), // Ensures no commas in year labels
-        axis: "bottom",
-        color: "#eee"
       },
       y: {
-        label: "Shows",
+        label: "↑ Tree count",
         labelAnchor: "center",
-        color: "#eee"
+        grid: true,
       },
       marks: [
-        Plot.barY(yearCounts, { x: "year", y: "count", fill: "#90caf9" }),
+        Plot.rectY(
+          validData,
+          Plot.binX({ y: "count" }, { x: "dbh", fill: "#4caf7d", thresholds: 40 })
+        ),
         Plot.ruleY([0], { stroke: "#888" })
       ]
     });
@@ -78,11 +55,10 @@ function renderShowsByYearPlot() {
   });
 }
 
-// Ensure this runs after the DOM is ready and #plot exists
 window.addEventListener('DOMContentLoaded', () => {
   function waitForPlotDiv() {
     if (document.getElementById('plot')) {
-      renderShowsByYearPlot();
+      renderTreeDBHPlot();
     } else {
       setTimeout(waitForPlotDiv, 50);
     }
