@@ -3,10 +3,19 @@ function renderTreeDBHPlot() {
     // Log the first record so you can confirm field names
     console.log("Sample tree record:", data[0]);
 
-    // Filter to records with a valid DBH value
-    const validData = data
-      .map(d => ({ dbh: +d.properties?.dbh }))         // ← adjust "DBH" to match your field name
+    // 1. Access the features array
+    const features = data.features || [];
+    
+    // 2. Map and convert to numbers
+    const validData = features
+      .map(d => ({ 
+        dbh: +d.properties.dbh 
+      }))
+      // 3. Filter out bad values
       .filter(d => !isNaN(d.dbh) && d.dbh > 0 && d.dbh < 200);
+
+    // DEBUG: Check this in your console
+    console.log(`Total features: ${features.length}, Valid DBH found: ${validData.length}`);
 
     const plotDiv = document.getElementById('plot');
     plotDiv.innerHTML = '';
