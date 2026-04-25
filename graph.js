@@ -1,4 +1,4 @@
-stillfunction renderTreeDBHPlot() {
+function renderTreeDBHPlot() {
   loadTreeData().then(data => {
     // Log the first record so you can confirm field names
     console.log("Sample tree record:", data[0]);
