@@ -1,21 +1,21 @@
 function renderTreeDBHPlot() {
   loadTreeData().then(data => {
-    // Log the first record so you can confirm field names
-    console.log("Sample tree record:", data[0]);
-
-    // 1. Access the features array
-    const features = data.features || [];
-    
-    // 2. Map and convert to numbers
-    const validData = features
+    // 'data' is already the array of objects from your load function
+    const validData = data
       .map(d => ({ 
-        dbh: +d.properties.dbh 
+        dbh: +d.properties?.dbh 
       }))
-      // 3. Filter out bad values
       .filter(d => !isNaN(d.dbh) && d.dbh > 0 && d.dbh < 200);
 
-    // DEBUG: Check this in your console
-    console.log(`Total features: ${features.length}, Valid DBH found: ${validData.length}`);
+    console.log("Records passed to plot:", validData.length);
+
+    const plotDiv = document.getElementById('plot');
+    plotDiv.innerHTML = '';
+
+    if (validData.length === 0) {
+      plotDiv.textContent = "Still no data. Check console for 'Records passed to plot'.";
+      return;
+    }
 
     const plotDiv = document.getElementById('plot');
     plotDiv.innerHTML = '';
