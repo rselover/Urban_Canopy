@@ -17,9 +17,6 @@ function renderTreeDBHPlot() {
       return;
     }
 
-    const plotDiv = document.getElementById('plot');
-    plotDiv.innerHTML = '';
-
     let plotWidth = 700;
     const parent = plotDiv.parentElement;
     if (parent) {
