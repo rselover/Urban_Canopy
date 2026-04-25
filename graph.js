@@ -4,7 +4,7 @@ function renderTreeDBHPlot() {
     console.log("Sample tree record:", data[0]);
 
     // Filter to records with a valid DBH value
-    const validData = data.features
+    const validData = data
       .map(d => ({ dbh: +d.properties.dbh }))         // ← adjust "DBH" to match your field name
       .filter(d => !isNaN(d.dbh) && d.dbh > 0 && d.dbh < 200);
 
