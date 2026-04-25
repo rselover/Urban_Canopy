@@ -1,4 +1,4 @@
-const geojsonUrl = './brpd_trees.json';
+const geojsonUrl = './bprd_trees.json';
 
 function loadTreeData() {
   return d3.json(geojsonUrl).then(data => 
